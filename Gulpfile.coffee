@@ -7,12 +7,13 @@ spawn          = require('child_process').spawn
 
 runRails = null
 runRails = ->
-  if runRails.child?
-    runRails.child.kill('SIGINT')
+  runRails.child?.kill('SIGINT')
 
   runRails.child = spawn 'bundle', ['exec', 'rails', 's']
   runRails.child.stdout.pipe(process.stdout)
   runRails.child.stderr.pipe(process.stderr)
+
+process.on 'exit', -> runRails.child?.kill('SIGINT')
 
 makeBrowserify = ->
   b = watchify(browserify(
