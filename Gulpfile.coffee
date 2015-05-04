@@ -19,6 +19,7 @@ makeBrowserify = ->
   b = watchify(browserify(
     entries: ['./app/assets/javascripts/app.cjsx']
     extensions: ['js', 'coffee', 'cjsx']
+    debug: true
     cache: {}
     packageCache: {}
   ).transform(coffeeReactify))
@@ -30,6 +31,10 @@ makeBrowserify = ->
 
     bundle
       .call(this)
+      .on 'error', (e) ->
+        console.log e.message
+
+        @emit('end')
       .pipe(source('app.js'))
       .pipe(gulp.dest('./public/javascripts'))
 
