@@ -1,7 +1,5 @@
-Run `bin/setup`, then `gulp` to start the app at `http://localhost:3000`. Gulp
-will handle:
+Install [Docker Machine](), then run `docker-compose build` and `docker-compose up`.
+The app will be running on `http://$(docker-machine ip default):3000/`.
+Use `ctrl-c` in the `docker-compose` terminal to shut down the machines.
 
-* restarting the app if anything in `config/` changes.
-* recompiling `app/assets/javascripts/app.cjsx` and anything that this
-  file links to.
-
+If you need to access the command line of the running container, run `bin/docker-bash`.
