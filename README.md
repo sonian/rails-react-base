@@ -11,7 +11,9 @@ Then, run `docker-compose build` and `docker-compose up`.
 The app will be running on `http://$(docker-machine ip default):3000/`. (get
 the IP address of the Docker machine into your Mac clipboard with
 `docker-machine ip default | pbcopy`).
-Use `ctrl-c` in the `docker-compose` terminal to shut down the machines.
+
+Use `ctrl-c` in the `docker-compose` terminal to shut down the machines. Be patient,
+as it can take a few moments.
 
 If you need to access the command line of the running container, run `bin/docker-bash`.
 
