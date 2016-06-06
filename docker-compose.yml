@@ -1,0 +1,14 @@
+dependencies:
+  image: busybox
+  volumes:
+    - /node_modules
+    - /vendored_gems
+    - /db
+app:
+  build: .
+  volumes_from:
+    - dependencies
+  ports:
+    - '0.0.0.0:3000:3000'
+  volumes:
+    - '.:/app'
