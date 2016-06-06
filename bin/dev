@@ -1,0 +1,25 @@
+#!/bin/bash
+
+MACHINE_NAME="default"
+
+docker-machine ip default >/dev/null 2>/dev/null || {
+  echo "Starting ${MACHINE_NAME} docker machine"
+  docker-machine start ${MACHINE_NAME}
+
+  eval $(docker-machine env default)
+
+  bin/dev
+  exit $?
+}
+
+eval $(docker-machine env default)
+
+docker-compose build
+docker-compose up &
+pid=$!
+
+echo "Open your browser and go to http://$(docker-machine ip ${MACHINE_NAME}):3000"
+
+wait $pid
+
+rm node_modules

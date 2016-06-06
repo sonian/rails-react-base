@@ -18,4 +18,4 @@
 
 node_modules/
 public/javascripts/
-public/app.js
+public/app.js*

@@ -5,12 +5,12 @@ module.exports = {
     path: __dirname + '/public',
     filename: 'app.js'
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-source-map',
   module: {
     loaders: [
       {
-        test: /\.jsx$/,
-        loader: 'babel?stage=0'
+        test: /\.jsx?$/,
+        loaders: ['babel', 'eslint']
       }
     ]
   },
