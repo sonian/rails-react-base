@@ -16,11 +16,13 @@ docker-machine ip default >/dev/null 2>/dev/null || {
 
 eval $(docker-machine env default)
 
+echo "Open your browser and go to http://$(docker-machine ip ${MACHINE_NAME}):3000"
+
+sleep 2
+
 docker-compose build
 docker-compose up &
 pid=$!
-
-echo "Open your browser and go to http://$(docker-machine ip ${MACHINE_NAME}):3000"
 
 wait $pid
 
