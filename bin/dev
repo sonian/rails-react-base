@@ -2,6 +2,8 @@
 
 MACHINE_NAME="default"
 
+rm -Rf node_modules
+
 docker-machine ip default >/dev/null 2>/dev/null || {
   echo "Starting ${MACHINE_NAME} docker machine"
   docker-machine start ${MACHINE_NAME}
@@ -22,4 +24,4 @@ echo "Open your browser and go to http://$(docker-machine ip ${MACHINE_NAME}):30
 
 wait $pid
 
-rm node_modules
+rm -Rf node_modules

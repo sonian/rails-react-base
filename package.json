@@ -8,7 +8,7 @@
     "rails": "bundle exec rails server -b 0.0.0.0",
     "webpack": "webpack --watch",
     "start": "npm-run-all --parallel rails webpack",
-    "lint": "eslint --fix 'app/assets/javascripts/**/*.js'"
+    "lint": "eslint --fix 'app/assets/javascripts/**/*.js' && bundle exec rubocop -a -D -c rubocop.yml"
   },
   "author": "",
   "license": "ISC",

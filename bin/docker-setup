@@ -2,7 +2,7 @@
 
 bundle install --path /vendored_gems || bundle update
 rm -Rf node_modules
-ln -sf /node_modules node_modules
+ln -s /node_modules node_modules
 npm install
 bundle exec rake db:setup db:migrate
 

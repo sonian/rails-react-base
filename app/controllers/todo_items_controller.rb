@@ -10,8 +10,8 @@ class TodoItemsController < ApplicationController
   end
 
   private
+
   def todo_item_params
     params.require(:todo_item).permit(:text, :is_done)
   end
 end
-

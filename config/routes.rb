@@ -4,5 +4,5 @@ Rails.application.routes.draw do
     post '/' => 'todo_items#create'
   end
 
-  root :to => 'welcome#index'
+  root to: 'welcome#index'
 end

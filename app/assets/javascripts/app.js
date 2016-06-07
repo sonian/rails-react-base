@@ -1,12 +1,8 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import 'whatwg-fetch';
 
-class App extends React.Component {
-  static propTypes = {
-    newForm: PropTypes.object,
-  };
-
+class App extends Component {
   static defaultProps = {
     newForm: { text: '' },
   };

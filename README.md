@@ -12,4 +12,6 @@ the machine. Be patient, as it can take a few moments.
 
 If you need to access the command line of the running container, run `bin/docker-bash`.
 
+You can lint the source code of the app with `bin/docker-lint`.
+
 If you're on Linux, install Docker and Docker Compose.
