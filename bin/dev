@@ -4,19 +4,23 @@ MACHINE_NAME="default"
 
 rm -Rf node_modules
 
-docker-machine ip default >/dev/null 2>/dev/null || {
-  echo "Starting ${MACHINE_NAME} docker machine"
-  docker-machine start ${MACHINE_NAME}
+command -v docker-machine && (
+  docker-machine ip default >/dev/null 2>/dev/null || {
+    echo "Starting ${MACHINE_NAME} docker machine"
+    docker-machine start ${MACHINE_NAME}
+
+    eval $(docker-machine env default)
+
+    bin/dev
+    exit $?
+  }
 
   eval $(docker-machine env default)
 
-  bin/dev
-  exit $?
-}
-
-eval $(docker-machine env default)
-
-echo "Open your browser and go to http://$(docker-machine ip ${MACHINE_NAME}):3000"
+  echo "Open your browser and go to http://$(docker-machine ip ${MACHINE_NAME}):3000"
+) || (
+  echo "Open your browser and go to http://localhost:3000"
+)
 
 sleep 2
 
