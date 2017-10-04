@@ -1,13 +1,17 @@
-dependencies:
+rails_dependencies:
   image: busybox
   volumes:
-    - /node_modules
     - /vendored_gems
     - /db
+node_dependencies:
+  image: busybox
+  volumes:
+    - /app/node_modules
 app:
   build: .
   volumes_from:
-    - dependencies
+    - rails_dependencies
+    - node_dependencies
   ports:
     - '0.0.0.0:3000:3000'
   volumes:

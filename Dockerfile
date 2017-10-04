@@ -1,4 +1,4 @@
-FROM mwallasch/docker-ruby-node
+FROM starefossen/ruby-node
 EXPOSE 3000
 WORKDIR /app
 

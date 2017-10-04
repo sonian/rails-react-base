@@ -1,12 +1,8 @@
 #!/bin/bash
 
 bundle install --path /vendored_gems || bundle update
-rm -Rf node_modules
-ln -s /node_modules node_modules
-npm install
+npm install --silent
 bundle exec rake db:setup db:migrate
 
 rm tmp/pids/server.pid
 npm run start
-
-rm -Rf node_modules

@@ -1,3 +1,4 @@
+/* global fetch, document */
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import 'whatwg-fetch';
@@ -16,14 +17,15 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch('/todo_items')
-    .then((response) => response.json())
-    .then((data) => { this.setState({ data }); });
+  async componentWillMount() {
+    const response = await fetch('/todo_items');
+    const data = await response.json();
+
+    this.setState({ data });
   }
 
-  create(_data) {
-    fetch(
+  async create(_data) {
+    const response = await fetch(
       '/todo_items',
       {
         method: 'POST',
@@ -33,13 +35,12 @@ class App extends Component {
           'Content-Type': 'application/json',
         },
       }
-    )
-    .then((response) => response.json())
-    .then((data) => {
-      this.setState({
-        data,
-        newForm: { ...this.props.newForm },
-      });
+    );
+    const data = await response.json();
+
+    this.setState({
+      data,
+      newForm: { ...this.props.newForm },
     });
   }
 
@@ -70,7 +71,6 @@ class App extends Component {
           <li>
             <input
               type="text"
-              ref="new"
               placeholder="new"
               value={this.state.newForm.text}
               onKeyUp={this.handleNewKeyUp}

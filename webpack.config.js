@@ -1,6 +1,6 @@
 module.exports = {
   context: __dirname + '/app/assets/javascripts',
-  entry: './app',
+  entry: './entry',
   output: {
     path: __dirname + '/public',
     filename: 'app.js'
@@ -10,7 +10,8 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel', 'eslint']
+        loaders: ['babel-loader', 'eslint-loader'],
+        exclude: /node_modules/,
       }
     ]
   },
@@ -18,6 +19,6 @@ module.exports = {
     poll: 1000
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   }
 };
