@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  scope 'todo_items' do
-    get '/' => 'todo_items#index'
-    post '/' => 'todo_items#create'
-  end
+  resources :todo_items, only: [:index, :create, :update, :destroy]
 
   root to: 'welcome#index'
 end
