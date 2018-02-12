@@ -6,17 +6,16 @@ class TodoItemsController < ApplicationController
   def create
     TodoItem.create!(todo_item_params)
     index
-    # TODO: return something here
   end
 
   def update
     todo.update_attributes(todo_item_params)
-    # TODO: return something here
+    index
   end
 
   def destroy
     todo.destroy
-    # TODO: return something here
+    index
   end
 
   private
