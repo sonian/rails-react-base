@@ -1,4 +1,3 @@
-/* globals fetch */
 import 'whatwg-fetch';
 
 // TYPES

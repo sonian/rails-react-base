@@ -1,4 +1,3 @@
-/* globals fetch, document */
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import PropTypes from 'prop-types';
@@ -6,6 +5,14 @@ import { connect, Provider } from 'react-redux';
 import 'whatwg-fetch';
 import { create } from './actions';
 import configureStore from './configureStore';
+
+// TODO:
+//  - move API call inside `componentWillMount` to Redux
+//  - implement the following features in the component and with Redux:
+//    * editing the text of a todo
+//    * check/un-checking a todo as dsone
+//    * deleting a todo
+//  - testing of Redux code is a plus. Write your tests in `rails-react-base/spec/javascripts/`
 
 class App extends Component {
   static propTypes = {
@@ -31,7 +38,6 @@ class App extends Component {
     };
   }
 
-  // TODO: move this API call to Redux
   async componentWillMount() {
     const response = await fetch('/todo_items');
     const data = await response.json();
