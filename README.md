@@ -2,7 +2,7 @@ If you do not have Docker and Docker Compose already:
 
 * on Mac OS X or Windows, install [Docker Toolbox](https://www.docker.com/docker-toolbox), then run
   the following:
-  * `docker-machine create -d virtualbox default`
+  * `docker-machine create -d virtualbox interview`
   * `docker-machine start interview`
   * `eval $(docker-machine env interview)`
 * on Linux, install Docker and Docker Compose.
