@@ -9,6 +9,20 @@ class TodoItemsController < ApplicationController
     index
   end
 
+  def update
+    todo_item = TodoItem.find(params['todo_item']['id'])
+    todo_item.update(todo_item_params)
+
+    index
+  end
+
+  def destroy
+    todo_item = TodoItem.find(params['todo_item']['id'])
+    todo_item.destroy
+
+    index
+  end
+
   private
 
   def todo_item_params
