@@ -3,7 +3,13 @@ import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect, Provider } from 'react-redux';
 import 'whatwg-fetch';
-import { create } from './actions';
+import {
+  load as loadItems,
+  create as createItem,
+  update as updateItem,
+  softUpdateItem,
+  deleteItem,
+} from './actions';
 import configureStore from './configureStore';
 
 // TODO:
@@ -16,7 +22,11 @@ import configureStore from './configureStore';
 
 class App extends Component {
   static propTypes = {
-    create: PropTypes.func.isRequired,
+    createItem: PropTypes.func.isRequired,
+    loadItems: PropTypes.func.isRequired,
+    updateItem: PropTypes.func.isRequired,
+    softUpdateItem: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
     newForm: PropTypes.shape({
       text: PropTypes.string,
     }),
@@ -33,44 +43,75 @@ class App extends Component {
     super(props);
 
     this.state = {
-      data: [],
       newForm: { ...this.props.newForm },
     };
   }
 
   async componentWillMount() {
-    const response = await fetch('/todo_items');
-    const data = await response.json();
-
-    this.setState({ data });
+    this.props.loadItems();
   }
 
   handleNewChange = (e) => {
     this.setState({
       newForm: { ...this.state.newForm, text: e.target.value },
     });
-  }
+  };
 
   handleNewKeyUp = (e) => {
     if (e.keyCode === 13) {
-      this.props.create(this.state.newForm);
+      this.props.createItem(this.state.newForm);
       this.setState({ newForm: { ...this.props.newForm } });
     }
+  };
+
+  handleEditChange = idx => (e) => {
+    const modifiedItems = this.props.todos.items;
+    modifiedItems[idx] = {
+      ...modifiedItems[idx],
+      text: e.target.value,
+    };
+
+    this.props.softUpdateItem({ items: modifiedItems });
+  }
+
+  handleEditKeyUp = idx => (e) => {
+    if (e.keyCode === 13) {
+      this.props.updateItem(this.props.todos.items[idx]);
+    }
+  };
+
+  itemChecked = idx => () => {
+    const item = this.props.todos.items[idx];
+    this.props.updateItem({
+      ...item,
+      is_done: !item.is_done,
+    });
+  }
+
+  deleteItem = idx => () => {
+    this.props.deleteItem(this.props.todos.items[idx]);
   }
 
   render() {
-    // TODO: Once the data is loaded from Redux completely, remove this
-    const todos = this.props.todos.items.length ? this.props.todos.items : this.state.data;
-
     return (
       <div>
         <h1>To Do Is Cool</h1>
         <ul>
-          {todos.map(item => (
+          {this.props.todos.items.map((item, idx) => (
             <li key={item.id}>
-              <input type="checkbox" checked={item.is_done} value />
-              <input type="text" value={item.text} />
-              <button>Delete</button>
+              <input
+                type="checkbox"
+                value={item.is_done || ''}
+                checked={item.is_done}
+                onClick={this.itemChecked(idx)}
+              />
+              <input
+                type="text"
+                value={item.text}
+                onChange={this.handleEditChange(idx)}
+                onKeyUp={this.handleEditKeyUp(idx)}
+              />
+              <button onClick={this.deleteItem(idx)}>Delete</button>
             </li>
           ))}
           <li>
@@ -88,7 +129,13 @@ class App extends Component {
   }
 }
 
-const ConnectedApp = connect(state => ({ todos: state.todos }), { create })(App);
+const ConnectedApp = connect(state => ({ todos: state.todos }), {
+  loadItems,
+  createItem,
+  updateItem,
+  softUpdateItem,
+  deleteItem,
+})(App);
 
 render(
   <Provider store={configureStore()}>
