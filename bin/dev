@@ -1,21 +1,21 @@
 #!/bin/bash
 
-MACHINE_NAME="default"
+MACHINE_NAME="interview"
 
 rm -Rf node_modules
 
 command -v docker-machine && (
-  docker-machine ip default >/dev/null 2>/dev/null || {
+  docker-machine ip ${MACHINE_NAME} >/dev/null 2>/dev/null || {
     echo "Starting ${MACHINE_NAME} docker machine"
     docker-machine start ${MACHINE_NAME}
 
-    eval $(docker-machine env default)
+    eval $(docker-machine env ${MACHINE_NAME})
 
     bin/dev
     exit $?
   }
 
-  eval $(docker-machine env default)
+  eval $(docker-machine env ${MACHINE_NAME})
 
   echo "Open your browser and go to http://$(docker-machine ip ${MACHINE_NAME}):3000"
 ) || (
